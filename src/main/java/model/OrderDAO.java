@@ -28,12 +28,12 @@ public class OrderDAO {
         String query = "INSERT INTO `Order` VALUES"
                 + "(UUID(), "
                 + newOrder.getISBN() + ", "
-                + newOrder.getQuantity() + ");" ;
+                + newOrder.getQuantity() + ");" ; // 15 chưa kiểm tra số có âm không
         try {
-            ModelManager.getInstance().executeQuery(query);
+            ModelManager.getInstance().executeQuery(query); //43 sql có thể bị lỗi
             return true;
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace(); //     37 chưa in ra lỗi
         }
         return false;
     }
@@ -56,7 +56,7 @@ public class OrderDAO {
             ModelManager.getInstance().executeQuery(query);
             return true;
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace();//37 chưa in ra lỗi
         }
         return false;
     }
@@ -65,7 +65,7 @@ public class OrderDAO {
     public static ArrayList<Order> getOrders(Integer offset) {
         String query = "SELECT `Order`.* , title FROM `Order` NATURAL JOIN `Book` LIMIT "
                 + ModelManager.getPagecount()
-                + " OFFSET " + offset + ";";
+                + " OFFSET " + offset + ";";// 15 Không kiểm tra số có âm không
 
         ArrayList<Order> orders = new ArrayList<>();
         try {
@@ -79,7 +79,7 @@ public class OrderDAO {
                 orders.add(order);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace();// 37 chưa in ra lỗi
         }
 
         return orders;
