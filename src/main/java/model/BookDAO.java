@@ -443,7 +443,7 @@ public class BookDAO {
             book.setNumberOfCopies(Integer.parseInt(rs.getString("copies")));
             return book;
         } catch (SQLException | NullPointerException e) {
-            e.printStackTrace();
+            e.printStackTrace(); // 37 chưa ỉn a lỗi
         }
         return null;
     }
