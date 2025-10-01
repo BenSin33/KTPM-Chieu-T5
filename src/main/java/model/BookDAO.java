@@ -357,13 +357,13 @@ public class BookDAO {
      * find many books by searching using optional attributes.
      * @return the matched books.
      */
-    public static ArrayList<Book> find(Integer ISBN, String title, String publisherName, BookCategory category,
+   public static ArrayList<Book> find(Integer ISBN, String title, String publisherName, BookCategory category,
                                        ArrayList<String> authorName, String pub_year, Integer offset) {
         ArrayList<Book> matchedBooks = new ArrayList<>();
         Boolean whereClause = false;
         String query = "SELECT DISTINCT Book.* FROM (Book NATURAL JOIN Author) ";
         if (authorName != null && authorName.size() > 0) {
-            String names_list = "";
+            String names_list = "";// 6 nameList
             for(String name : authorName){
                 if(names_list.isEmpty()){
                     names_list += "\"" + name.trim();
@@ -400,15 +400,15 @@ public class BookDAO {
         query += " LIMIT " + ModelManager.getPagecount() + " OFFSET " + (offset == null? 0 : offset) + ";";
         System.out.println(query);
 
-        ArrayList<Book> matchedBooks = new ArrayList<>();
+        ArrayList<Book> matchedBooks = new ArrayList<>();// 7 đã khai báo ở trên rồi
         try{
-            ResultSet resultSet = ModelManager.getInstance().executeQuery(query);
+            ResultSet resultSet = ModelManager.getInstance().executeQuery(query);//43 sql có thể bị lỗi
             while (resultSet.next()) {
                 matchedBooks.add(buildBook(resultSet));
             }
             resultSet.close();
         } catch (SQLException e){
-            e.printStackTrace();
+            e.printStackTrace();// 37 chưa in ra lỗi
         }
         return matchedBooks;
     }
@@ -435,7 +435,7 @@ public class BookDAO {
         try {
             book.setISBN(Integer.parseInt(rs.getString("ISBN")));
             book.setTitle(rs.getString("title"));
-            book.setPublisherName(rs.getString("publisher"));
+            book.setPublisherName(rs.getString("publisher"));// 7 sai tên cột publisherName
             book.setPublicationYear(rs.getString("publication_year"));
             book.setCategory(BookCategory.valueOf(rs.getString("category")));
             book.setPrice(Double.parseDouble(rs.getString("price")));
