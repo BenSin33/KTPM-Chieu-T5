@@ -7,7 +7,7 @@ public class User {
     private byte[] encryptedPassword;
     private byte[] salt;
     private String email;
-    private String fName;
+    private String fName;               // checkcode 6 + 60: tên biến không rõ ràng + gây nhầm lẫn
     private String lName;
     private String phoneNumber;
     private String shippingAddress;
@@ -16,7 +16,7 @@ public class User {
     /**
      *  will be used by Statistics.
      * */
-    int sum_copies;
+    int sum_copies;         // checkcode 12 + 62 + 11 : sum_copies và sum_paid không có access modifier + không được sử dụng trong logic + có thể là biến cục bộ nếu chỉ dùng trong thống kê
     int sum_paid;
 
     public int getSum_paid() {
@@ -40,7 +40,7 @@ public class User {
 
     }
 
-    public User(String email, String fName, String lName, String phoneNumber, String shippingAddress) {
+    public User(String email, String fName, String lName, String phoneNumber, String shippingAddress) {     
         this.email = email;
         this.fName = fName;
         this.lName = lName;
@@ -89,23 +89,23 @@ public class User {
 
 
     // SETTERS
-    public void setEmail(String email) {
+    public void setEmail(String email) {        // checkcode 15: không kiểm tra giá trị đầu vào
         this.email = email;
     }
 
-    public void setlName(String lName) {
+    public void setlName(String lName) {        // checkcode 15: không kiểm tra giá trị đầu vào
         this.lName = lName;
     }
 
-    public void setfName(String fName) {
+    public void setfName(String fName) {        // checkcode 15: không kiểm tra giá trị đầu vào
         this.fName = fName;
     }
 
-    public void setEncryptedPassword(byte[] encryptedPassword) {
+    public void setEncryptedPassword(byte[] encryptedPassword) {        // checkcode 15: không kiểm tra giá trị đầu vào
         this.encryptedPassword = encryptedPassword;
     }
 
-    public void setSalt(byte[] salt) {
+    public void setSalt(byte[] salt) {      // checkcode 15: không kiểm tra giá trị đầu vào
         this.salt = salt;
     }
 
@@ -114,15 +114,15 @@ public class User {
     }
 
 
-    public void setPhoneNumber(String phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {        // checkcode 15: không kiểm tra giá trị đầu vào
         this.phoneNumber = phoneNumber;
     }
 
-    public void setShippingAddress(String shippingAddress) {
+    public void setShippingAddress(String shippingAddress) {    // checkcode 15: không kiểm tra giá trị đầu vào
         this.shippingAddress = shippingAddress;
     }
 
-    public void setUserID(String userID) {
+    public void setUserID(String userID) {          // checkcode 15: không kiểm tra giá trị đầu vào
         this.userID = userID;
     }
 
@@ -136,14 +136,14 @@ public class User {
      * Search for books by any of the book’s attributes.
      *
      */
-    public void searchBook() {
+    public void searchBook() {      // Checkcode 64: Không có nội dung thực thi
 
     }
 
     /**
      * Add books to a shopping cart
      */
-    public void addItem() {
+    public void addItem() {      // Checkcode 64: Không có nội dung thực thi
 
     }
 
@@ -152,7 +152,7 @@ public class User {
      * View the items in the cart
      *
      */
-    public void viewItems() {
+    public void viewItems() {        // Checkcode 64: Không có nội dung thực thi
 
     }
 
@@ -161,7 +161,7 @@ public class User {
      * View the individual and total prices of the books in the cart
      *
      */
-    public void viewPrice() {
+    public void viewPrice() {        // Checkcode 64: Không có nội dung thực thi
 
     }
 
@@ -170,7 +170,7 @@ public class User {
      * Remove items from the cart
      *
      */
-    public void removeItem() {
+    public void removeItem() {       // Checkcode 64: Không có nội dung thực thi
 
     }
 
@@ -184,7 +184,7 @@ public class User {
      * - The book’s quantities in the store are updated according to this transaction.
      *
      */
-    public void checkout() {
+    public void checkout() {         // Checkcode 64: Không có nội dung thực thi
 
     }
 
@@ -194,12 +194,12 @@ public class User {
      * This will remove all the items in the current cart.
      *
      */
-    public void logout() {
+    public void logout() {       // Checkcode 64: Không có nội dung thực thi
 
     }
 
     @Override
-    public String toString() {
+    public String toString() {                  // checkcode 49 + 46 + 47: Không kiểm tra null + không mô tả đầy đủ hành vi + tên biến chưa gõ
         return "email: " + email + "\n"
                 + "fName: " + fName + "\n"
                 + "lName: " + lName + "\n"
