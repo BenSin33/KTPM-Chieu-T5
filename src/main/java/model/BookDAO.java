@@ -255,17 +255,15 @@ public class BookDAO {
      * @return the matched book.
      */
     public static Book findByISBN(Integer ISBN) {
+        //if (ISBN == null) return null; Thêm kiểm tra null cho ISBN
+        // Gọi resultSet.next() mà không có dòng null thì sẽ ra lỗi SQLException nếu trả về null
         String query = "SELECT * FROM Book "
-                + "WHERE ISBN = " + ISBN + ";";
-    /** Hoàng Anh
-     * findByISBN luôn gọi resultSet.next() mà không kiểm tra
-     * Nếu ISBN không tồn tại, gọi resultSet.next() sẽ trả về false và lỗi.
-     * Cần check if (resultSet.next()).
-     * */
+                + "WHERE ISBN = " + ISBN + ";"; // nếu giá trị nhập vào không có dấu '' thì sẽ bị lỗi SQL
+
         ResultSet resultSet = null;
         try {
             resultSet = ModelManager.getInstance().executeQuery(query);
-            resultSet.next();
+            resultSet.next();// Không có kiểm tra next() thì kq trả về false sẽ bị lỗi SQLException
             Book book = buildBook(resultSet);
             resultSet.close();
             return book;
@@ -274,15 +272,15 @@ public class BookDAO {
             return null;
         }
     }
-
+   
     /**
      * find many books by searching by Author Name.
      * @param authorName the author we search by
      * @return the matched books.
      */
     public static ArrayList<Book> findByAuthor(@NotNull String authorName) {
-        String query = "SELECT * FROM Book "
-                + "WHERE Author = " + "'" + authorName + "'" + ";";
+        String query = "SELECT * FROM Book " // thiếu hàm kiểm tra null cho authorName
+                + "WHERE Author = " + "'" + authorName + "'" + ";";// bảng book không có cột Author sẽ bị lỗi sql 
 
         ArrayList<Book> matchedBooks = new ArrayList<>();
         try{
@@ -306,7 +304,7 @@ public class BookDAO {
     public static ArrayList<Book> findByCategory(@NotNull BookCategory category, Integer offset) {
         String query = "SELECT * FROM Book "
                 + "WHERE category = " + "'" + category.name() + "'"
-                + " LIMIT " + ModelManager.getPagecount() + " OFFSET " + offset + ";";
+                + " LIMIT " + ModelManager.getPagecount() + " OFFSET " + offset + ";"; // dùng offset trưc tiếp có thể null hoặc âm
 
         ArrayList<Book> matchedBooks = new ArrayList<>();
         try{
@@ -328,24 +326,25 @@ public class BookDAO {
      */
     public static ArrayList<Book> findByPublisher(@NotNull String publisherName) {
         String query = "SELECT * FROM Book "
-                + "WHERE publisher = " + "'" + publisherName + "'" + ";";
+                + "WHERE publisher = " + "'" + publisherName + "'" + ";"; // việc nối chuỗi có thể bị tấn công bởi SQL Injection 
+                // bảng book không có cột publisher sẽ bị lỗi sql
 
-        ArrayList<Book> matchedBooks = new ArrayList<>();
+        ArrayList<Book> matchedBooks = new ArrayList<>(); 
         try{
-            ResultSet resultSet = ModelManager.getInstance().executeQuery(query);
-            while (resultSet.next()) {
-                matchedBooks.add(buildBook(resultSet));
+            ResultSet resultSet = ModelManager.getInstance().executeQuery(query); 
+            while (resultSet.next()) {  
+                matchedBooks.add(buildBook(resultSet)); 
             }
-            resultSet.close();
-        } catch (SQLException e){
-            e.printStackTrace();
+            resultSet.close(); // chỉ đóng ResultSet mà không đóng Connection
+        } catch (SQLException e){ // chỉ in ra lỗi mà không xử lý gì thêm
+            e.printStackTrace(); 
         }
         return matchedBooks;
     }
 
     public static ArrayList<Book> findByPubYear(String year) {
         String query = "SELECT * FROM Book "
-                + "WHERE publication_year = " + "'" + year + "'" + ";";
+                + "WHERE publication_year = " + "'" + year + "'" + ";"; // dễ lỗi nếu year null sẽ gây ra lỗi sql
 
         ArrayList<Book> matchedBooks = new ArrayList<>();
         try{
@@ -359,7 +358,6 @@ public class BookDAO {
         }
         return matchedBooks;
     }
-
     /**
      * find many books by searching using optional attributes.
      * @return the matched books.
