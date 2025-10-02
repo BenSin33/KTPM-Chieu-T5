@@ -1,9 +1,9 @@
 package beans;
 
 public class Order {
-    private String orderID;
+    private String orderID; // orderId có thể null nếu input không hợp lệ
     private int ISBN;
-    private int quantity;
+    private int quantity; // Không kiểm tra giá trị âm
 
     /**
      *  for the book name in confirm order
@@ -15,7 +15,7 @@ public class Order {
     }
 
     public void setBook_name(String book_name) {
-        this.book_name = book_name;
+        this.book_name = book_name; //Không validate (null)
     }
 
     // GETTERS
@@ -23,7 +23,7 @@ public class Order {
         return ISBN;
     }
 
-    public String getOrderID() {
+    public String getOrderID() { //có thể null nếu chưa set
         return orderID;
     }
 
@@ -32,15 +32,15 @@ public class Order {
     }
 
     // SETTERS
-    public void setISBN(int ISBN) {
+    public void setISBN(int ISBN) { // Không validate (negative, 0)
         this.ISBN = ISBN;
     }
 
-    public void setOrderID(String orderID) {
+    public void setOrderID(String orderID) { //Không kiểm tra null khi set
         this.orderID = orderID;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(int quantity) { // Không kiểm tra điều kiện (<=0)
         this.quantity = quantity;
     }
 }
